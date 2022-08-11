@@ -1,0 +1,31 @@
+@baseUrl = http://192.168.0.213/solar_api/v1
+
+GET {{baseUrl}}/GetInverterInfo.cgi
+
+###
+
+GET {{baseUrl}}/GetActiveDeviceInfo.cgi?DeviceClass=System
+
+###
+
+GET {{baseUrl}}/GetInverterRealtimeData.cgi?Scope=System
+
+###
+
+GET {{baseUrl}}/GetInverterRealtimeData.cgi?Scope=Device&DeviceId=1&DataCollection=CumulationInverterData
+
+###
+
+GET {{baseUrl}}/GetInverterRealtimeData.cgi?Scope=Device&DeviceId=1&DataCollection=3PInverterData
+
+###
+
+GET {{baseUrl}}/GetMeterRealtimeData.cgi?Scope=Device&DeviceId=0
+
+###
+
+GET {{baseUrl}}/GetPowerFlowRealtimeData.fcgi
+
+###
+
+GET {{baseUrl}}/GetArchiveData.cgi?Scope=System&StartDate=2022-08-10&EndDate=2022-08-11&SeriesType=Detail&Channel=TimeSpanInSec&Channel=EnergyReal_WAC_Sum_Produced
