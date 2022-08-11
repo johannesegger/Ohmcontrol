@@ -1,0 +1,12 @@
+[Unit]
+Description=Ohmcontrol
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /opt/ohmcontrol/app.py 192.168.0.213
+WorkingDirectory=/opt/ohmcontrol/
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=sysinit.target
