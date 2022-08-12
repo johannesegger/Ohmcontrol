@@ -77,9 +77,9 @@ if len(sys.argv) < 2:
 host_name = sys.argv[1]
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(2, GPIO.OUT)
-GPIO.setup(3, GPIO.OUT)
-GPIO.setup(4, GPIO.OUT)
+GPIO.setup(2, GPIO.OUT, initial = GPIO.LOW)
+GPIO.setup(3, GPIO.OUT, initial = GPIO.LOW)
+GPIO.setup(4, GPIO.OUT, initial = GPIO.LOW)
 
 quitEvent = Event()
 
