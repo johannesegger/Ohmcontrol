@@ -91,7 +91,7 @@ try:
         print(f"{now} - Power to grid: {watt_to_grid}W - Actual State: {bin(state)} - Desired state: {bin(new_state)}")
         for (index, pin_number) in [(0, 2), (1, 3), (2, 4)]:
             actual_state = (state >> index) & 0b1 != 0
-            desired_state = (state >> index) & 0b1 != 0
+            desired_state = (new_state >> index) & 0b1 != 0
             if actual_state != desired_state:
                 print(f"  Set pin #{pin_number} to {desired_state}")
                 GPIO.output(pin_number, desired_state)
