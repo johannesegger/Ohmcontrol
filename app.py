@@ -104,6 +104,7 @@ try:
             if actual_state != desired_state:
                 print(f"  Set pin #{pin_number} to {desired_state}")
                 GPIO.output(pin_number, desired_state)
+        state = new_state
         quitEvent.wait(60)
 finally:
     GPIO.cleanup()
