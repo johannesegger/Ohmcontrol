@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
 import requests
-import time
+from threading import Event
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import RPi.GPIO as GPIO
+import signal
 import sys
 
 def update_state(state, watt_to_grid):
@@ -80,10 +81,18 @@ GPIO.setup(2, GPIO.OUT)
 GPIO.setup(3, GPIO.OUT)
 GPIO.setup(4, GPIO.OUT)
 
+quitEvent = Event()
+
+def quit(_signo, _frame):
+    quitEvent.set()
+
+signal.signal(signal.SIGINT, quit)
+signal.signal(signal.SIGTERM, quit)
+
 state = 0
 
 try:
-    while True:
+    while not quitEvent.is_set():
         response = requests.get(f'http://{host_name}/solar_api/v1/GetPowerFlowRealtimeData.fcgi')
         watt_to_grid = float(response.json()['Body']['Data']['Site']['P_Grid']) * -1
         new_state = update_state(state, watt_to_grid)
@@ -95,6 +104,6 @@ try:
             if actual_state != desired_state:
                 print(f"  Set pin #{pin_number} to {desired_state}")
                 GPIO.output(pin_number, desired_state)
-        time.sleep(60)
-finally:  
+        quitEvent.wait(60)
+finally:
     GPIO.cleanup()
