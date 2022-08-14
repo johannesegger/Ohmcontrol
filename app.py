@@ -92,13 +92,20 @@ signal.signal(signal.SIGTERM, quit)
 
 state = 0
 
+def state_to_string(state):
+    if state == 0b000: return "0 phases"
+    elif state == 0b001: return "1 phase"
+    elif state == 0b011: return "2 phases"
+    elif state == 0b111: return "3 phases"
+    return f"{bin(state)} (invalid)"
+
 try:
     while not quitEvent.is_set():
         response = requests.get(f'http://{host_name}/solar_api/v1/GetPowerFlowRealtimeData.fcgi')
         watt_to_grid = float(response.json()['Body']['Data']['Site']['P_Grid']) * -1
         new_state = update_state(state, watt_to_grid)
         now = datetime.now(ZoneInfo("Europe/Vienna"))
-        print(f"{now} - Power to grid: {watt_to_grid}W - Actual State: {bin(state)} - Desired state: {bin(new_state)}")
+        print(f"{now} - Power to grid: {watt_to_grid}W - Actual State: {state_to_string(state)} - Desired state: {state_to_string(new_state)}")
         for (index, pin_number) in enumerate(pin_numbers):
             actual_state = (state >> index) & 0b1 != 0
             desired_state = (new_state >> index) & 0b1 != 0
