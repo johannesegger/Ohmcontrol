@@ -76,10 +76,11 @@ if len(sys.argv) < 2:
 
 host_name = sys.argv[1]
 
+pin_numbers = [17, 27, 22]
+
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(2, GPIO.OUT, initial = GPIO.LOW)
-GPIO.setup(3, GPIO.OUT, initial = GPIO.LOW)
-GPIO.setup(4, GPIO.OUT, initial = GPIO.LOW)
+for pin_number in pin_numbers:
+    GPIO.setup(pin_number, GPIO.OUT, initial = GPIO.LOW)
 
 quitEvent = Event()
 
@@ -98,7 +99,7 @@ try:
         new_state = update_state(state, watt_to_grid)
         now = datetime.now(ZoneInfo("Europe/Vienna"))
         print(f"{now} - Power to grid: {watt_to_grid}W - Actual State: {bin(state)} - Desired state: {bin(new_state)}")
-        for (index, pin_number) in [(0, 2), (1, 3), (2, 4)]:
+        for (index, pin_number) in enumerate(pin_numbers):
             actual_state = (state >> index) & 0b1 != 0
             desired_state = (new_state >> index) & 0b1 != 0
             if actual_state != desired_state:
