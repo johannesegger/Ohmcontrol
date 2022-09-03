@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
+import logging
 import requests
 from threading import Event
-from datetime import datetime
-from zoneinfo import ZoneInfo
 import RPi.GPIO as GPIO
 import signal
 import sys
@@ -76,6 +75,13 @@ if len(sys.argv) < 2:
 
 host_name = sys.argv[1]
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+formatter = logging.Formatter(fmt="%(asctime)s %(name)s.%(levelname)s: %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+handler = logging.StreamHandler(stream=sys.stdout)
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
 pin_numbers = [17, 27, 22]
 
 GPIO.setmode(GPIO.BCM)
@@ -104,13 +110,12 @@ try:
         response = requests.get(f'http://{host_name}/solar_api/v1/GetPowerFlowRealtimeData.fcgi')
         watt_to_grid = float(response.json()['Body']['Data']['Site']['P_Grid']) * -1
         new_state = update_state(state, watt_to_grid)
-        now = datetime.now(ZoneInfo("Europe/Vienna"))
-        print(f"{now} - Power to grid: {watt_to_grid}W - Actual State: {state_to_string(state)} - Desired state: {state_to_string(new_state)}")
+        logger.info(f"Power to grid: {watt_to_grid}W - Actual State: {state_to_string(state)} - Desired state: {state_to_string(new_state)}")
         for (index, pin_number) in enumerate(pin_numbers):
             actual_state = (state >> index) & 0b1 != 0
             desired_state = (new_state >> index) & 0b1 != 0
             if actual_state != desired_state:
-                print(f"  Set pin #{pin_number} to {desired_state}")
+                logger.info(f"  Set pin #{pin_number} to {desired_state}")
                 GPIO.output(pin_number, desired_state)
         state = new_state
         quitEvent.wait(60)
