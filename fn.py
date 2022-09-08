@@ -1,3 +1,5 @@
+from math import floor
+
 def update_state(state, watt_to_grid):
     (on_off_state, pwm_ratio) = state
 
@@ -12,6 +14,7 @@ def update_state(state, watt_to_grid):
         watt_to_grid += 3000
 
     pwm_ratio = min(max(watt_to_grid / 3000.0, 0), 1)
+    pwm_ratio = floor(pwm_ratio * 10) / 10
 
     return (on_off_state, pwm_ratio)
 
