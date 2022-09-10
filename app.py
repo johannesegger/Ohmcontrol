@@ -21,7 +21,7 @@ handler = logging.StreamHandler(stream=sys.stdout)
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
-on_off_relay_pin_numbers = [17, 27]
+on_off_relay_pin_numbers = [26, 16]
 
 GPIO.setmode(GPIO.BCM)
 for pin_number in on_off_relay_pin_numbers:
