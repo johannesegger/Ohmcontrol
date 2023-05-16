@@ -31,29 +31,16 @@ DIY replacement for Fronius Ohmpilot.
 * Connect Arduino A3 (R), D5 (G) and D6 (B) to status LED.
 
 ```
-   Separate phase       Separate phase
-     from grid            to Ohmpilot
-          │                   │
-       ┌──┴───────────────────┴──┐
-       │ Load               Load │
-2 X    │          Relay          │
-       │ Control -     Control + │
-       └───┬────────────────┬────┘
-           │                │
-        RPi GND     RPi GPIO pin 16/26
-```
-
-```
-   Separate phase       Separate phase
-     from grid            to Ohmpilot
-          │                   │
-       ┌──┴───────────────────┴──┐
-       │ Load               Load │
-1 X    │          Relay          │
-       │ Control -     Control + │
-       └───┬────────────────┬────┘
-           │                │
-      Arduino GND  Arduino pin D10
+   Separate phase       Separate phase     |      Separate phase       Separate phase
+      from grid          to Ohmpilot       |         from grid          to Ohmpilot
+          │                   │            |             │                   │
+       ┌──┴───────────────────┴──┐         |          ┌──┴───────────────────┴──┐
+       │ Load               Load │         |          │ Load               Load │
+2 X    │          Relay          │         |   1 X    │          Relay          │
+       │ Control -     Control + │         |          │ Control -     Control + │
+       └───┬────────────────┬────┘         |          └───┬────────────────┬────┘
+           │                │              |              │                │
+        RPi GND    RPi GPIO pin 16/26      |         Arduino GND    Arduino pin D10
 ```
 
 ## Software
