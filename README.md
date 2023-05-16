@@ -45,6 +45,8 @@ DIY replacement for Fronius Ohmpilot.
 
 ## Software
 
+### Raspberry Pi
+
 * Flash SD card e.g. using [Raspberry Pi Imager](https://www.raspberrypi.com/software/).
   * Set all necessary settings so that you can connect to your RPi after it starts up.
 * Connect to your RPi e.g. using [Visual Studio Code](https://code.visualstudio.com/docs/remote/ssh).
@@ -59,3 +61,7 @@ DIY replacement for Fronius Ohmpilot.
     ```bash
     journalctl -u ohmcontrol -r
     ```
+
+### Arduino Nano
+
+* Compile and upload `pwm.ino` to your Arduino.
