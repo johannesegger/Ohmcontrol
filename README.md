@@ -52,7 +52,7 @@ DIY replacement for Fronius Ohmpilot.
 * Connect to your RPi e.g. using [Visual Studio Code](https://code.visualstudio.com/docs/remote/ssh).
 * Run the following commands to clone the repository and install Ohmcontrol as service:
     ```bash
-    sudo apt update && apt install -y git
+    sudo apt update && sudo apt install -y git
     git clone https://github.com/johannesegger/Ohmcontrol
     cd Ohmcontrol
     ./setup.sh
