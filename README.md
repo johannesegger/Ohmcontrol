@@ -28,7 +28,7 @@ DIY replacement for Fronius Ohmpilot.
 * Connect phase to Arduino D2 (use resistors to reduce voltage down to 3.3V)
   * This is necessary to detect zero-crossing of voltage for switching PWM relay state.
   * Zero-cross-detection works best when no other devices use that phase.
-* Connect Arduino A3 (R), D5 (G) and D6 (B) to status LED.
+* Connect Arduino D3 (R), D5 (G) and D6 (B) to status LED.
 
 ```
    Separate phase       Separate phase     |      Separate phase       Separate phase
